@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: alex
+Build-Jdk: 10.0.2
+Implementation-Title: burgercloud-ui
+Implementation-Version: 1
+Implementation-Vendor-Id: burgergroupid
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/burgerparentartifact/burgercloud-ui
+Created-By: Maven Integration for Eclipse
+

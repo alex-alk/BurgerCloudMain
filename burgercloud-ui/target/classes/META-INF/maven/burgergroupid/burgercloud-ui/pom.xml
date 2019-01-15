@@ -1,0 +1,11 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>burgerparentgroup</groupId>
+    <artifactId>burgerparentartifact</artifactId>
+    <version>1</version>
+  </parent>
+  <groupId>burgergroupid</groupId>
+  <artifactId>burgercloud-ui</artifactId>
+  <name>burgercloud-ui</name>
+</project>
