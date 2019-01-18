@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: burgers.BurgercloudSecurityApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.736 s <<< FAILURE! - in burgers.BurgercloudSecurityApplicationTests
+initializationError(burgers.BurgercloudSecurityApplicationTests)  Time elapsed: 0.014 s  <<< ERROR!
+java.lang.IllegalStateException: Unable to find a @SpringBootConfiguration, you need to use @ContextConfiguration or @SpringBootTest(classes=...) with your test
+

@@ -4,8 +4,4 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import burgers.Burger;
 
-public interface BurgerRepository extends PagingAndSortingRepository<Burger, Long>{
-	
-	//Jdbc version:
-	//Burger save(Burger burger);
-}
+public interface BurgerRepository extends PagingAndSortingRepository<Burger, Long>{}

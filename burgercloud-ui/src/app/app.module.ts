@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { RecentsComponent } from './recents/recents.component';
 
 import { HttpClientModule} from '@angular/common/http';
+import { DesignComponent } from './design/design.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RecentsComponent
+    RecentsComponent,
+    DesignComponent
   ],
   imports: [
     BrowserModule,
