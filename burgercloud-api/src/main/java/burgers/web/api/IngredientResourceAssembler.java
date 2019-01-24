@@ -1,5 +1,4 @@
 package burgers.web.api;
-
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import burgers.Ingredient;
 

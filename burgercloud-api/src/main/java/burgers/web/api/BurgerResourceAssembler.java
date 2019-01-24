@@ -6,7 +6,7 @@ import burgers.Burger;
 public class BurgerResourceAssembler extends ResourceAssemblerSupport<Burger, BurgerResource>{
 
 	public BurgerResourceAssembler() {
-		super(DesignBurgerController.class, BurgerResource.class);
+		super(RecentBurgersController.class, BurgerResource.class);
 	}
 	
 	@Override

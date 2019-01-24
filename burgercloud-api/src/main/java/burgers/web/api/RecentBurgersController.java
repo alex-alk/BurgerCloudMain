@@ -1,64 +1,66 @@
 package burgers.web.api;
 
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.EntityLinks;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.hateoas.Resources;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+
 import burgers.Burger;
 import burgers.data.BurgerRepository;
-import org.springframework.http.HttpStatus;
-@RestController
-@RequestMapping(path="/design", produces="application/json")
-@CrossOrigin(origins="*")
-public class DesignBurgerController {
-	
-	private BurgerRepository burgerRepo;
+
+@RepositoryRestController()
+@RequestMapping(path="/burgers/recent")
+@CrossOrigin(origins = "*")
+public class RecentBurgersController {
 	
 	@Autowired
 	EntityLinks entityLinks;
 	
-	public DesignBurgerController(BurgerRepository burgerRepo) {
+	private BurgerRepository burgerRepo;
+	
+	public RecentBurgersController(BurgerRepository burgerRepo) {
 		this.burgerRepo = burgerRepo;
 	}
 	
-	@GetMapping("/recent")
-	public Resources<BurgerResource> recentBurgers() {
+	@ResponseBody
+	@GetMapping(produces="application/hal+json")
+	public Resources<BurgerResource> recentBurgers(){
 		PageRequest page = PageRequest.of(0, 12, Sort.by("createdAt").descending());
 		List<Burger> burgers = burgerRepo.findAll(page).getContent();
 		List<BurgerResource> burgerResources = new BurgerResourceAssembler().toResources(burgers);
 		Resources<BurgerResource> recentResources = new Resources<BurgerResource> (burgerResources);
-		recentResources.add(
-				ControllerLinkBuilder.linkTo(
-						ControllerLinkBuilder.methodOn(DesignBurgerController.class).recentBurgers())
-					.withRel("recents")
-		);
 		return recentResources;
-	}
-
-	@GetMapping("/{id}")
-	public Burger burgerById(@PathVariable("id") Long id) {
-		Optional<Burger> optBurger = burgerRepo.findById(id);
-		if (optBurger.isPresent()) {
-			return optBurger.get();
-		}
-		return null;
 	}
 	
 	@PostMapping(consumes="application/json")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Burger postBurger(@RequestBody Burger burger) {
-		return burgerRepo.save(burger);
+	@ResponseStatus()
+	public Burger newEmployee(@RequestBody Burger newEmployee) {
+		return burgerRepo.save(newEmployee);
+	}
+	
+	@Bean
+	public ResourceProcessor<PagedResources<Resource<Burger>>> burgerProcessor(EntityLinks links){
+		return new ResourceProcessor<PagedResources<Resource<Burger>>>() {
+			@Override
+			public PagedResources<Resource<Burger>> process(PagedResources<Resource<Burger>> resource){
+				resource.add(links.linkFor(Burger.class).slash("recent").withRel("recents"));
+				return resource;
+			}
+		};
 	}
 }

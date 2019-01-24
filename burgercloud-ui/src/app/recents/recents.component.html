@@ -1,4 +1,22 @@
-<p>
-  recents works!
-  {{recentBurgers}}after
-</p>
+<cloud-title>Admire some recently created taco masterpieces</cloud-title>
+
+<p>Even the greatest artists sometimes need to be inspired by the works of others.
+  Here are some of the most recently created tacos, designed by taco artists just like you...</p>
+
+<div class="recentsblock">
+  <div class="tacoblock" *ngFor="let burger of recentBurgers">
+      <div class="tacoName"><span class="small">The</span><br/>"{{burger.name}}"</div>
+      <div class="tacoDesc">
+        <ul class="commalist">
+          <li *ngFor="let ingredient of burger.ingredients | nonwraps">{{ingredient.name}}</li>
+        </ul>
+        <div *ngIf="(burger.ingredients | wraps)?.length > 0">
+        <span>wrapped in</span><ul class="commalist">
+            <li *ngFor="let ingredient of burger.ingredients | wraps">{{ingredient.name}}</li>
+        </ul>
+        </div>
+        <div *ngIf="(burger.ingredients | wraps)?.length == 0">in a bowl</div>
+      </div>
+      <little-button label="Comandă acest burger"></little-button>
+  </div>
+</div>
