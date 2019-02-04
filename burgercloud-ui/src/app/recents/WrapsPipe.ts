@@ -11,7 +11,7 @@ export class WrapsPipe implements PipeTransform {
       if (ingredient.type === 'CHIFLĂ') {
         const wrap: any = {};
         wrap.id = ingredient.id;
-        wrap.name = 'a ' + ingredient.name;
+        wrap.name = ingredient.name;
         wrap.type = ingredient.type;
         wraps.push(wrap);
       }

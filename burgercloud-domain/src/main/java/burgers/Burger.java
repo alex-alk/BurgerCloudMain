@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -32,6 +33,10 @@ public class Burger {
 	@NotNull(message="Trebuie să alegeți cel puțin un ingredient")
 	@Size(min=1, message="Trebuie să alegeți cel puțin un ingredient")
 	private List<Ingredient> ingredients;
+	
+	@ManyToOne(targetEntity=User.class)
+	@NotNull
+	private User user;
 	
 	@PrePersist
 	void createdAt() {

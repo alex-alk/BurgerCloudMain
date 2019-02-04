@@ -20,6 +20,10 @@ import { LittleButtonComponent } from './little-button/little-button.component';
 import { FooterComponent } from './footer/footer.component';
 import { SpecialsComponent } from './specials/specials.component';
 import { LocationsComponent } from './locations/locations.component';
+import { LoginComponent } from './login/login.component';
+import { SuccessComponent } from './success/success.component';
+import { LoginokComponent } from './loginok/loginok.component';
+import { RegokComponent } from './regok/regok.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,11 @@ import { LocationsComponent } from './locations/locations.component';
     LittleButtonComponent,
     FooterComponent,
     SpecialsComponent,
-    LocationsComponent
+    LocationsComponent,
+    LoginComponent,
+    SuccessComponent,
+    LoginokComponent,
+    RegokComponent
   ],
   imports: [
     BrowserModule,

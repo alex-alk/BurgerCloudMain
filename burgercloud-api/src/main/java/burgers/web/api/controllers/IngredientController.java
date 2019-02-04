@@ -1,4 +1,4 @@
-package burgers.web.api;
+package burgers.web.api.controllers;
 
 public class IngredientController {
 

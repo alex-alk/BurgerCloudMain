@@ -5,6 +5,7 @@
 
 <div class="recentsblock">
   <div class="tacoblock" *ngFor="let burger of recentBurgers">
+    <form (ngSubmit)="orderThis(burger.link)">
       <div class="tacoName"><span class="small">The</span><br/>"{{burger.name}}"</div>
       <div class="tacoDesc">
         <ul class="commalist">
@@ -18,5 +19,6 @@
         <div *ngIf="(burger.ingredients | wraps)?.length == 0">in a bowl</div>
       </div>
       <little-button label="Comandă acest burger"></little-button>
+    </form>
   </div>
 </div>

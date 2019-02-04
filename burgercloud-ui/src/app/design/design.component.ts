@@ -6,7 +6,6 @@ import { Ingredient } from './ingredient';
 import { Router } from '@angular/router/';
 import { CartService } from '../cart/cart-service';
 import { Burger } from './burger';
-import { catchError, retry } from 'rxjs/operators';
 
 @Component({
   selector: 'app-design',
@@ -23,29 +22,11 @@ export class DesignComponent implements OnInit {
   cheeses = [];
   sauces = [];
   burgerUrl = 'http://localhost:8080/api/burgers';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json'
-    })
-  };
   
-  constructor(private httpClient: HttpClient, public model: Burger) { }
-  
-  private handleError(error: HttpErrorResponse) {
-  if (error.error instanceof ErrorEvent) {
-    // A client-side or network error occurred. Handle it accordingly.
-    console.error('An error occurred:', error.error.message);
-  } else {
-    // The backend returned an unsuccessful response code.
-    // The response body may contain clues as to what went wrong,
-    console.error(
-      `Backend returned code ${error.status}, ` +
-      `body was: ${error.error}`);
+  constructor(private model: Burger, private httpClient: HttpClient, 
+    private cart: CartService, private router: Router) { 
+    
   }
-  // return an observable with a user-facing error message
-  return throwError(
-    'Something bad happened; please try again later.');
-};
   
   getAllIngredients(): Observable<Ingredient[]> {
     return this.httpClient.get<Ingredient[]>('http://localhost:8080/api/ingredients').pipe(
@@ -54,22 +35,22 @@ export class DesignComponent implements OnInit {
         }));
   }
   
-  addBurger (burger: Burger): Observable<Burger> {
-    return this.httpClient.post<Burger>(this.burgerUrl, burger, this.httpOptions)
-      .pipe(
-        catchError(this.handleError('addBurger', burger))
-      );
-  }
-  
   updateIngredients(ingredient, event) {
     if (event.target.checked) {
-      this.model.ingredients.push(ingredient);
+      this.model.ingredients.push(ingredient._links.ingredient.href);
     } else {
       this.model.ingredients.splice(this.model.ingredients.findIndex(i => i === ingredient), 1);
     }
   }
 
   ngOnInit() {
+  
+    if(!sessionStorage.getItem('user')){
+      this.router.navigate(['/login']);
+    }
+    let userl= JSON.parse(sessionStorage.getItem('user'));
+    let link =  userl._links.self.href;
+    this.model.user = link;
     this.model.ingredients = [];
     this.getAllIngredients().subscribe((data: Ingredient[]) => {
       this.allIngredients = data;
@@ -79,20 +60,15 @@ export class DesignComponent implements OnInit {
       this.cheeses = this.allIngredients.filter(c => c.type === 'BRÂNZĂ');
       this.sauces = this.allIngredients.filter(s => s.type === 'SOS');
     });
+   
   }
   
-  data = {'name': 'ang', 'ingredients': [{'id':'aaa','name':'mmm','type':'PROTEINĂ'},{'id':'aaa','name':'mmm','type':'CHIFLĂ'}]};
   onSubmit() {
     this.httpClient.post(
         this.burgerUrl,
-        this.data, {
+        this.model, {
             headers: new HttpHeaders().set('Content-type', 'application/json'),
-        }).subscribe(burger => console.log('+++'));
-        
-    console.log(this.data);
-   // this.addBurger(this.model);
-    console.log('***');
-  //  this.cart.addToCart(model);
-  //  this.router.navigate(['/cos']);
+        }).subscribe(burger => console.log('-------added to db--------'));
+    this.router.navigate(['/succes']);
   }
 }

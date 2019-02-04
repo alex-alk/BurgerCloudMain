@@ -1,6 +1,7 @@
 package burgers.web.api;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import burgers.Ingredient;
+import burgers.web.api.controllers.IngredientController;
 
 public class IngredientResourceAssembler extends ResourceAssemblerSupport<Ingredient, IngredientResource>{
 

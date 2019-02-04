@@ -2,6 +2,7 @@ package burgers.web.api;
 
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import burgers.Burger;
+import burgers.web.api.controllers.RecentBurgersController;
 
 public class BurgerResourceAssembler extends ResourceAssemblerSupport<Burger, BurgerResource>{
 

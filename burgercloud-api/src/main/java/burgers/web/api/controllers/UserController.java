@@ -1,0 +1,32 @@
+package burgers.web.api.controllers;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.rest.webmvc.RepositoryLinksResource;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.ResourceProcessor;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import burgers.User;
+
+@RepositoryRestController
+@ExposesResourceFor(User.class)
+@RequestMapping("/api/users/search/")
+public class UserController implements
+        ResourceProcessor<RepositoryLinksResource> {
+
+    @Override
+    public RepositoryLinksResource process(RepositoryLinksResource resource) {
+        resource.add(ControllerLinkBuilder.linkTo(UserController.class).withRel("login"));
+
+        return resource;
+    }
+}
+
