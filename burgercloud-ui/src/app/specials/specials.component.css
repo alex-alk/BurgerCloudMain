@@ -1,5 +1,5 @@
 div.recentsblock {
-  min-width: 1000px;
+  min-width: 100%;
 }
 
 div.tacoblock {
@@ -16,6 +16,12 @@ div.tacoblock {
   height: 100%;
   color: #003366;
   border: 1px solid #76D6FF;
+}
+
+@media only screen and (max-width: 582px) {
+  div.tacoblock {
+    margin-left: -20px;
+  }
 }
 
 div.tacoblock a {
@@ -57,7 +63,7 @@ ul.commalist li:not(:first-child):before {
 }
 
 ul.commalist li:last-child:before {
-  content: " and ";
+  content: " și ";
 }
 
 ul.commalist li:only-child:before {

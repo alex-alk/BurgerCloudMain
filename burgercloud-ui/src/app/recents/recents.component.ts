@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { CartService } from '../cart/cart-service';
 import { Router } from '@angular/router/';
+import { Globals } from '../globals';
 
 @Component({
   selector: 'app-recents',
@@ -22,17 +23,17 @@ export class RecentsComponent implements OnInit {
     ingredients : [],
     link: ''
   }
+  globals: Globals;
     
   constructor(private httpClient: HttpClient, private cart: CartService, private router: Router) { }
 
   ngOnInit() {
-    
-      this.recentBurgers = this.getRecentBurgers();
-    
+    this.globals = new Globals();
+    this.recentBurgers = this.getRecentBurgers();
   }
   
   getRecentBurgers(){
-    this.httpClient.get<Burger[]>('http://localhost:8080/api/burgers?size=12&sort=createdAt,desc').subscribe((result:any)=>{ 
+    this.httpClient.get<Burger[]>(this.globals.apiURL + '/burgers?size=12&sort=createdAt,desc').subscribe((result:any)=>{ 
         let burgers = result._embedded.burgers;
         for(let burger of burgers){
           this.burger.name = burger.name;
@@ -66,8 +67,6 @@ export class RecentsComponent implements OnInit {
     }
     if(!twin)burgersInCart.push(link);
     sessionStorage.setItem('burgers',JSON.stringify(burgersInCart));
-    console.log("order");
-    console.log(burgersInCart);
     this.router.navigate(['/cos']);
   }
 }

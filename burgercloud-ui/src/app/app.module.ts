@@ -24,6 +24,7 @@ import { LoginComponent } from './login/login.component';
 import { SuccessComponent } from './success/success.component';
 import { LoginokComponent } from './loginok/loginok.component';
 import { RegokComponent } from './regok/regok.component';
+import { OrderokComponent } from './orderok/orderok.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { RegokComponent } from './regok/regok.component';
     LoginComponent,
     SuccessComponent,
     LoginokComponent,
-    RegokComponent
+    RegokComponent,
+    OrderokComponent
   ],
   imports: [
     BrowserModule,

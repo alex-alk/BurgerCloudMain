@@ -6,6 +6,7 @@ import { Ingredient } from './ingredient';
 import { Router } from '@angular/router/';
 import { CartService } from '../cart/cart-service';
 import { Burger } from './burger';
+import { Globals } from '../globals';
 
 @Component({
   selector: 'app-design',
@@ -21,15 +22,16 @@ export class DesignComponent implements OnInit {
   veggies = [];
   cheeses = [];
   sauces = [];
-  burgerUrl = 'http://localhost:8080/api/burgers';
+  burgerUrl = '';
   
-  constructor(private model: Burger, private httpClient: HttpClient, 
+  constructor(public model: Burger, private httpClient: HttpClient, 
     private cart: CartService, private router: Router) { 
     
   }
   
   getAllIngredients(): Observable<Ingredient[]> {
-    return this.httpClient.get<Ingredient[]>('http://localhost:8080/api/ingredients').pipe(
+    let globals = new Globals();
+    return this.httpClient.get<Ingredient[]>(globals.apiURL + '/ingredients').pipe(
         map((result:any)=>{
            return result._embedded.ingredients;
         }));
@@ -44,7 +46,8 @@ export class DesignComponent implements OnInit {
   }
 
   ngOnInit() {
-  
+    let globals = new Globals();
+    this.burgerUrl = globals.apiURL + '/burgers';
     if(!sessionStorage.getItem('user')){
       this.router.navigate(['/login']);
     }

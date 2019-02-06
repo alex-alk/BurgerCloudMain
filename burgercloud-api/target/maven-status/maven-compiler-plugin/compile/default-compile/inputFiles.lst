@@ -1,7 +1,1 @@
-/media/alex/06FCB8FAFCB8E559/Linux/Programe/Eclipse EE Projects/Eclipse EE Workspace/BurgerCloud/burgercloud-api/src/main/java/burgers/web/api/RecentBurgersController.java
-/media/alex/06FCB8FAFCB8E559/Linux/Programe/Eclipse EE Projects/Eclipse EE Workspace/BurgerCloud/burgercloud-api/src/main/java/burgers/web/api/BurgerResource.java
-/media/alex/06FCB8FAFCB8E559/Linux/Programe/Eclipse EE Projects/Eclipse EE Workspace/BurgerCloud/burgercloud-api/src/main/java/burgers/DemoController.java
-/media/alex/06FCB8FAFCB8E559/Linux/Programe/Eclipse EE Projects/Eclipse EE Workspace/BurgerCloud/burgercloud-api/src/main/java/burgers/web/api/IngredientController.java
-/media/alex/06FCB8FAFCB8E559/Linux/Programe/Eclipse EE Projects/Eclipse EE Workspace/BurgerCloud/burgercloud-api/src/main/java/burgers/web/api/BurgerResourceAssembler.java
-/media/alex/06FCB8FAFCB8E559/Linux/Programe/Eclipse EE Projects/Eclipse EE Workspace/BurgerCloud/burgercloud-api/src/main/java/burgers/web/api/IngredientResource.java
-/media/alex/06FCB8FAFCB8E559/Linux/Programe/Eclipse EE Projects/Eclipse EE Workspace/BurgerCloud/burgercloud-api/src/main/java/burgers/web/api/IngredientResourceAssembler.java
+/media/alex/06FCB8FAFCB8E559/Linux/Programe/Eclipse EE Projects/Eclipse EE Workspace/BurgerCloud/burgercloud-api/src/main/java/burgers/web/api/controllers/UserController.java

@@ -31,7 +31,6 @@ public class Burger {
 	
 	@ManyToMany(targetEntity=Ingredient.class)
 	@NotNull(message="Trebuie să alegeți cel puțin un ingredient")
-	@Size(min=1, message="Trebuie să alegeți cel puțin un ingredient")
 	private List<Ingredient> ingredients;
 	
 	@ManyToOne(targetEntity=User.class)

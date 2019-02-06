@@ -5,12 +5,24 @@ div.cloudtitle {
   background-image: url("../../assets/Cloud_sm.png");
   background-repeat: no-repeat;
   background-position: right;
-  margin-bottom: 20px;
+  background-size: auto;
+  margin-bottom: 100px;
 }
 
 div.cloudtitletext {
   padding-top: 20px;
   width: 100%;
-  text-align: right;
+  text-align: center;
   color: #003366;
+}
+@media only screen and (max-width: 399px) {
+  div.cloudtitle{
+    margin-bottom: 130px;
+    font-size: 20px;
+  }
+}
+@media only screen and (max-width: 420px) {
+  div.cloudtitle{
+    background-size: 100%;
+  }
 }

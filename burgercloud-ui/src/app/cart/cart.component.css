@@ -46,11 +46,11 @@ select {
 }
 
 div.groupBoxHalf {
-  width: 450px;
+  
 }
 
 div.groupBoxFull {
-  width: 938px;
+  
 }
 
 div.groupBox {
@@ -62,12 +62,16 @@ div.groupBox {
   margin: 10px;
   border-radius: 10px;
   text-align: right;
-  padding: 0 10px 10px 0;
+  padding: 0 10px 0 0;
   height: 100%;
   color: #003366;
   border: 1px solid #76D6FF;
 }
-
+@media only screen and (max-width: 582px) {
+  div.groupBox {
+    margin-left: -20px;
+  }
+}
 div.groupBoxTitle {
   text-align: center;
   font-weight: bold;

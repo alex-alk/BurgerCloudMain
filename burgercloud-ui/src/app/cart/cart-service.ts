@@ -10,61 +10,70 @@ import { Ingredient } from './ingredient';
 })
 export class CartService {
 
-  items: CartItem[] = [];
-  ids = [];
-  
-  burger: Burger = {
-    name: '',
-    ingredients: [],
-    link:''
-  }
-  burgers: Burger[] = [];
+  cartItems: CartItem[];
   ingrdata:any = [];
-  burgerlink = '';
-  
+  total: number;
+    
   constructor(private httpClient: HttpClient) {
-    this.items = [];
+    this.cartItems = [];
   }
+  
   public getR(link) {
         return this.httpClient.get(link);
-  }
+  } 
   
-  getBurgers(){
-    let links: [];
-    links = JSON.parse(sessionStorage.getItem('burgers'));
+  setq(){
+    let quantities = [];
+    this.cartItems.forEach(item =>{
+      quantities.push(+item.quantity);
+      this.total += item.quantity*4.99;
+      console.log(quantities);
+      sessionStorage.setItem('quantities', JSON.stringify(quantities));
+    });
+  }
+  addToCart() {
+    let links = [];
+    this.cartItems = [];
+    let quantities = [];
+    let qdef = false;
+    if(sessionStorage.getItem('quantities')){
+      quantities = JSON.parse(sessionStorage.getItem('quantities'));
+      qdef = true;
+    }
+    if(JSON.parse(sessionStorage.getItem('burgers')))
+      links = JSON.parse(sessionStorage.getItem('burgers'));
+    let i = 0;
     links.forEach(link=>{ 
         this.getR(link).subscribe((result: any)=>{
               const ingrlink = result._links.ingredients.href;
               this.getR(ingrlink).subscribe((ingdata: any) =>{
+                            if(!qdef)quantities[i]=1;
+                            quantities.push(quantities[i]);
+                            sessionStorage.setItem('quantities',JSON.stringify(quantities));
                             this.ingrdata = ingdata._embedded.ingredients;
-                            this.items.push(new CartItem(new Burger(result.name, this.ingrdata, result._links.burger.href)));
-                                            }
-                                  );
-        })
-         
-             
+                            this.cartItems.push(
+                                new CartItem(
+                                    new Burger(result.name, this.ingrdata, result._links.burger.href),quantities[i]));
+              ++i;                      
+              });
+        })      
     });
   }
 
-  addToCart() {
-    
-  }
-
   getItemsInCart() {
-    return this.items;
-    
+    return this.cartItems;
   }
 
   getCartTotal() {
     let total = 0;
-    this.items.forEach(item => {
+    this.cartItems.forEach(item => {
       total += item.lineTotal;
     });
     return total;
   }
 
   emptyCart() {
-    this.items = [];
+    this.cartItems = [];
   }
 
 }

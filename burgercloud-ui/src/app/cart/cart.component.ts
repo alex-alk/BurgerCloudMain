@@ -2,6 +2,9 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { CartService } from './cart-service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router/';
+import { CartItem } from './cart-item';
+import { Burger } from './burger';
+import { Globals } from '../globals';
 
 @Component({
   selector: 'app-cart',
@@ -9,7 +12,6 @@ import { Router } from '@angular/router/';
   styleUrls: ['./cart.component.css']
 })
 
-@Injectable()
 export class CartComponent implements OnInit {
 
   model = {
@@ -25,48 +27,71 @@ export class CartComponent implements OnInit {
   };
   user: any ;
   link: string;
-
-  constructor(private router: Router, private cart: CartService, private httpClient: HttpClient) {
-    
+  ids = [];
+  burger: Burger = {
+    name: '',
+    ingredients: [],
+    link:''
+  }
+  burgers: Burger[] = [];
+  message: string;
+  burgerlink = '';
+  
+  constructor(private cart: CartService, private router: Router, private httpClient: HttpClient) {
   }
 
   ngOnInit() {
     if(!sessionStorage.getItem('user')){
       this.router.navigate(['/login']);
     }
-    this.cart.getBurgers();
-   
+    this.cart.addToCart();
+    //this.cart.setq();
   }
-
+  setqq(){
+    this.cart.setq();
+  }
+  getCartTotal() {
+    let total = 0;
+    this.cartItems.forEach(item => {
+      total += item.lineTotal;
+    });
+    return total;
+  }
+  get cartTotal() {
+    return this.getCartTotal();
+  }
   get cartItems() {
     return this.cart.getItemsInCart();
   }
 
-  get cartTotal() {
-    return this.cart.getCartTotal();
-  }
 
   onSubmit() {
+    if(!(this.model.deliveryName&&this.model.deliveryStreet&&this.model.deliveryZip&&this.model.ccNumber
+       &&this.model.ccExpiration&&this.model.ccCVV)){
+       this.message = 'Toate câmpurile sunt obligatorii.';
+    }else{
+      let i = 0;
+      let j: number;
+      let quantities: [];
+      quantities = JSON.parse(sessionStorage.getItem('quantities'));
       JSON.parse(sessionStorage.getItem('burgers')).forEach(burger => {
-        this.model.burgers.push(burger);
+        for( j = 0; j<+quantities[i]; ++j ){
+          this.model.burgers.push(burger);
+        }
         let userl= JSON.parse(sessionStorage.getItem('user'));
         let link =  userl._links.self.href;
         this.model.user = link;
+        ++i;
       });
-      console.log(this.model);
+      console.log();
+      let globals = new Globals();
+      let apiURL = globals.apiURL;
       this.httpClient.post(
-        'http://localhost:8080/api/orders',
+        apiURL + '/orders',
         this.model, {
             headers: new HttpHeaders().set('Content-type', 'application/json'),
-        }).subscribe(burger => console.log('-------added to db--------'));
-   // this.httpClient.post(
-   //     'http://localhost:8080/orders',
-   //     this.model, {
-   //         headers: new HttpHeaders().set('Content-type', 'application/json')
-   //                 .set('Accept', 'application/json'),
-   //     }).subscribe(r => this.cart.emptyCart());
-
-    // TODO: Do something after this...navigate to a thank you page or something
+        }).subscribe(burger => {console.log(this.model);this.router.navigate(['/orderok']);});
+    }
   }
 
 }

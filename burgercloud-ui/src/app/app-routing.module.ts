@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { SuccessComponent } from './success/success.component';
 import { LoginokComponent } from './loginok/loginok.component';
 import { RegokComponent } from './regok/regok.component';
+import { OrderokComponent } from './orderok/orderok.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'succes', component: SuccessComponent },
   { path: 'loginok', component: LoginokComponent },
-  { path: 'regok', component: RegokComponent }
+  { path: 'regok', component: RegokComponent },
+  { path: 'orderok', component: OrderokComponent }
   
 ];
 

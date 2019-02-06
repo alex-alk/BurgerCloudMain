@@ -1,9 +1,9 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost/burgercloud
-    username: alex
-    password: cincicinci
+    url: jdbc:mysql://us-cdbr-iron-east-03.cleardb.net:3306/ad_8836453f5924f03
+    username: b57a4d6a391410
+    password: 74a0feac
   data:
     rest:
       base-path: /api

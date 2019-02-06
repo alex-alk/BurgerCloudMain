@@ -12,10 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import org.hibernate.validator.constraints.CreditCardNumber;
 import lombok.Data;
 
 @Data
@@ -56,16 +53,15 @@ public class Order implements Serializable{
 	@Column(name="deliveryzip")
 	private String deliveryZip;
 	
-	@CreditCardNumber(message="Numarul de card nu este valid")
+	@NotBlank(message="Obligatoriu")
 	@Column(name="ccnumber")
 	private String ccNumber;
 	
-	@Pattern(regexp="^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$",
-			message="Trebuie să aibe formatul MM/YY")
+	@NotBlank(message="Obligatoriu")
 	@Column(name="ccexpiration")
 	private String ccExpiration;
 	
-	@Digits(integer=3, fraction=0, message="CVV invalid")
+	@NotBlank(message="Obligatoriu")
 	private String ccCVV;
 	
 	@ManyToMany(targetEntity=Burger.class)

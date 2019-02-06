@@ -1,21 +1,20 @@
 <div class="header">
-  <div class="logo"><a routerLink="/home"><img src="assets/BurgerCloud.png"/></a></div>
+  <div class="logo"><a routerLink="/home"><img src="assets/BurgerCloud.png" title="home"></a></div>
   <div class="topbar">
     <div class="topbaritems">
-      <div class="topbaritem" style="font-size: 17pt;">
+      <div class="topbaritem" style="font-size: 14pt;">
         <a routerLink="/design" class="plainlink caps">Creează un burger</a>
       </div>
       <div class="topbaritem">
         <a routerLink="/login" class="plainlink">
-          <img src="assets/down-triangle.png" style="float: right; margin-right:15px; margin-top: 12px;"/>
           <span class="caps small">Înregistrare</span><br/>
           <span class="smaller">sau Creare Cont</span>
         </a>
       </div>
-      <div class="topbaritem" style="font-size: 17pt;">
+      <div class="topbaritem" style="font-size: 14pt;">
         <a routerLink="/cos" class="plainlink">
           <img src="assets/cart.png" align="center" />
-    <!--        {{cart.getItemsInCart().length * 4.99 | currency}}-->
+            {{cart.getCartTotal() | currency}}
         </a>
       </div>
     </div>

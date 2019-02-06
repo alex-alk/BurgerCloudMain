@@ -15,7 +15,7 @@
 	<description>POM project</description>
 
 	<properties>
-		<java.version>10</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 
 	<dependencies>
@@ -36,12 +36,13 @@
 
 	<packaging>pom</packaging>
 	<modules>
-		<module>burgercloud-web</module>
+		
 		<module>burgercloud-api</module>
 		<module>burgercloud-data</module>
 		<module>burgercloud-domain</module>
 		<module>burgercloud-security</module>
 		<module>burgers</module>
 		<module>burgercloud-ui</module>
+		
 	</modules>
 </project>

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Burger } from './burger';
+import { Burger } from '../cart/burger';
 import { Ingredient } from './ingredient';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { CartService } from '../cart/cart-service';
 import { Router } from '@angular/router/';
+import { Globals } from '../globals';
 
 @Component({
   selector: 'app-specials',
@@ -23,24 +24,25 @@ export class SpecialsComponent implements OnInit {
   }
   arr = [];
   ingdata:any = [];
-  burgersURL = 'http://localhost:8080/api/burgers'
+  burgersURL = '';
+  globals: Globals;
    
   constructor(private httpClient: HttpClient, private cart: CartService, private router: Router) { }
 
   ngOnInit() {
-    
+      this.globals = new Globals();
+      this.burgersURL = this.globals.apiURL + '/burgers';
+      if(!sessionStorage.getItem('user')){
+        this.router.navigate(['/login']);
+      }
       let user = JSON.parse(sessionStorage.getItem('user'));
       let userURL = user._links.self.href;
       this.getR<any>(this.burgersURL).subscribe(data =>{
-        console.log(data);
         this.arr = data._embedded.burgers;
         //get burgers by user
         
         for(let item of this.arr){
-          console.log(item._links.user.href);
-          console.log(userURL);
           this.getR<any>(item._links.user.href).subscribe(data =>{
-             console.log(data);
               if(data._links.self.href==userURL){
               
                   this.burger.name = item.name;
@@ -75,6 +77,7 @@ export class SpecialsComponent implements OnInit {
     }
     if(!twin)burgersInCart.push(link);
     sessionStorage.setItem('burgers',JSON.stringify(burgersInCart));
+    //this.cart.addToCart();
     this.router.navigate(['/cos']);
   }
 

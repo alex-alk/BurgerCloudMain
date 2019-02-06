@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
   };
   
   globals: Globals;
-  
+  messagel: string;
+  messager: string;
   newUser: NewUser = {
     username: '',
     password: '',
@@ -36,26 +37,41 @@ export class LoginComponent implements OnInit {
   }
   
   login(){
-    this.http.get('http://localhost:8080/api/users/search/'+
+    let auth = false;
+    this.http.get(this.globals.usersURL + '/search/'+
                   'findByUsernameAndPassword?username='+this.user.username+'&password='+this.user.password)
                 .subscribe(response => {
                    if (response['username']) {
                        sessionStorage.setItem('user',JSON.stringify(response));
+                       auth = true;
                        this.router.navigate(['/loginok']);
                    } else {
-                      
                    }
-                });
+                }
+     );
+     setTimeout(() => {
+       if(!auth)this.messagel = 'Nume utilizator/parola greșite.';
+     }, 4000);
   }
+  
   register(){
-    console.log(this.newUser);
-    console.log(this.globals.usersURL);
-    this.http.post(
-        this.globals.usersURL,
-        this.newUser, {
-            headers: new HttpHeaders().set('Content-type', 'application/json'),
-        }).subscribe(burger => console.log('-------added to db--------'));
-    this.router.navigate(['/regok']);
+    if(!(this.newUser.username &&
+       this.newUser.password &&
+       this.newUser.fullname &&
+       this.newUser.street &&
+       this.newUser.city &&
+       this.newUser.state &&
+       this.newUser.zip &&
+       this.newUser.phone) ){
+         this.messager = 'Toate câmpurile sunt obligatorii!';
+     }else{
+         this.http.post(
+            this.globals.usersURL,
+            this.newUser, {
+                headers: new HttpHeaders().set('Content-type', 'application/json'),
+            }).subscribe(burger => console.log('-------added to db--------'));
+        this.router.navigate(['/regok']);
+      }
   }
     
 
